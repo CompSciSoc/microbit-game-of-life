@@ -3,6 +3,9 @@ from microbit import *
 def grid_to_image(grid):
     return Image("".join(["".join(map(str, row))+':' for row in grid]))
 
+def display_as_grid():
+    return [[display.get_pixel(x, y) for x in range(5)] for y in range(5)]
+    
 def tick(grid):
     new = [ [0]*5 for _ in range(5) ]
     for x in range(5):
@@ -39,11 +42,13 @@ def move():
         
 display.show(grid_to_image(grid))
 while True:
+    grid = display_as_grid()
     while button_a.is_pressed() and button_b.is_pressed():
-    
-
-        sleep(200)
         grid = tick(grid)
+        display.show(grid_to_image(grid))
+        sleep(200)
+        # reset was_pressed to `False`, this happens whenever it is called
+        _, _ = button_a.was_pressed(), button_b.was_pressed()
 
     if button_a.was_pressed():
         display.set_pixel(x, y, pixel)
@@ -51,11 +56,7 @@ while True:
         pixel = display.get_pixel(x, y)
 
     if button_b.was_pressed():
-        if pixel == 9:
-            display.set_pixel(x, y, 0)
-        else:
-            display.set_pixel(x, y, 9)
-            
+        display.set_pixel(x, y, 9-pixel)
         move()
         pixel = display.get_pixel(x, y)
 
