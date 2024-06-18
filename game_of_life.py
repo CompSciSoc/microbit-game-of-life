@@ -21,14 +21,6 @@ def tick(grid):
      
     return new
             
-grid = [
-    [0,0,0,0,0],
-    [0,0,9,0,0],
-    [0,0,0,9,0],
-    [0,9,9,9,0],
-    [0,0,0,0,0],
-]
-
 x, y = 0, 0
 pixel = 0
 
@@ -39,8 +31,16 @@ def move():
         x, y = 0, y+1
     if y == 5:
         y = 0
-        
-display.show(grid_to_image(grid))
+
+GLIDER = [
+    [0,0,0,0,0],
+    [0,0,9,0,0],
+    [0,0,0,9,0],
+    [0,9,9,9,0],
+    [0,0,0,0,0],
+]
+
+display.show(grid_to_image(GLIDER))
 while True:
     grid = display_as_grid()
     while button_a.is_pressed() and button_b.is_pressed():
@@ -59,6 +59,10 @@ while True:
         display.set_pixel(x, y, 9-pixel)
         move()
         pixel = display.get_pixel(x, y)
+
+    if accelerometer.was_gesture('shake'):
+        grid = GLIDER
+        display.show(grid_to_image(grid))
 
     display.set_pixel(x, y, 9)
     sleep(200)
