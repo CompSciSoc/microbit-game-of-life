@@ -42,8 +42,9 @@ GLIDER = [
 
 display.show(grid_to_image(GLIDER))
 while True:
-    grid = display_as_grid()
     while button_a.is_pressed() and button_b.is_pressed():
+        display.set_pixel(x, y, pixel)
+        grid = display_as_grid()
         grid = tick(grid)
         display.show(grid_to_image(grid))
         sleep(200)
