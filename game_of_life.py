@@ -49,9 +49,11 @@ while True:
             grid = tick(grid)
             display.show(grid_to_image(grid))
             sleep(200)
+            
             # reset was_pressed to `False`, this happens whenever it is called
             _, _ = button_a.was_pressed(), button_b.was_pressed()
-
+        pixel = display.get_pixel(x, y)
+    
     if button_a.was_pressed():
         display.set_pixel(x, y, pixel)
         move()
