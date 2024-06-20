@@ -42,14 +42,15 @@ GLIDER = [
 
 display.show(grid_to_image(GLIDER))
 while True:
-    while button_a.is_pressed() and button_b.is_pressed():
+    if button_a.is_pressed() and button_b.is_pressed():
         display.set_pixel(x, y, pixel)
         grid = display_as_grid()
-        grid = tick(grid)
-        display.show(grid_to_image(grid))
-        sleep(200)
-        # reset was_pressed to `False`, this happens whenever it is called
-        _, _ = button_a.was_pressed(), button_b.was_pressed()
+        while button_a.is_pressed() and button_b.is_pressed():
+            grid = tick(grid)
+            display.show(grid_to_image(grid))
+            sleep(200)
+            # reset was_pressed to `False`, this happens whenever it is called
+            _, _ = button_a.was_pressed(), button_b.was_pressed()
 
     if button_a.was_pressed():
         display.set_pixel(x, y, pixel)
